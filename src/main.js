@@ -6,13 +6,7 @@ import bootstrap from 'bootstrap'
 import './statics/css/bootstrap.css'
 import './statics/css/custum.css'
 import Moment from "moment"
-// let bootstrap = require("bootstrap");
-// css
-// import 'bootstrap/dist/css/bootstrap.css';
-// import jquery from "jquery"
-// global.jQuery = jquery;
-//导入全局组件
-import Home from "./components/home/Home.vue"
+import Home from "./components/home/Home.vue"//导入vue组件
 import App from "./app.vue"
 import NavBar from "./components/nav/NavBar.vue"
 import NavSide from "./components/nav/NavSide.vue"
@@ -23,10 +17,24 @@ import Activity from "./components/home/Activity.vue"
 import Member from "./components/home/Member.vue"
 import addSociety from "./components/apply/addSociety.vue"
 import addMember from  "./components/apply/addMember.vue"
+import addActivity from './components/apply/addActivity.vue'
 import Register from  "./components/login/Register.vue"
+import ReSociety from  './components/update/reSociety.vue'
+import ReUser from './components/update/reUser.vue'
 import VeeValidate from 'vee-validate';
-import zh from 'vee-validate/dist/locale/zh_CN';
+// let bootstrap = require("bootstrap");
+// css
+// import 'bootstrap/dist/css/bootstrap.css';
+// import jquery from "jquery"
+// global.jQuery = jquery;
 
+
+
+//导入element-ui
+import ElementUI from 'element-ui';
+import 'element-ui/lib/theme-chalk/index.css';
+
+Vue.use(ElementUI);
 Vue.use(VeeValidate);
 
 //注册全局组件
@@ -85,7 +93,20 @@ const router = new VueRouter({
         name:"register",
             path:"/register",
             component:Register
-        }
+        },{
+            name:"reuser",
+            path:"/reuser",
+            component:ReUser
+        },{
+            name:"resociety",
+            path:"/resociety",
+            component:ReSociety
+        },{
+            name:"addactivity",
+            path:"/addactivity",
+            component:addActivity
+        },
+
 
 
     ]
@@ -106,6 +127,7 @@ Vue.prototype.$storage =Session;
 Vue.prototype.$http = Axios;
 // Axios.defaults.BaseUrl = "127.0.0.1:7070/";
 
+//vue主实例
 new Vue({
     el: "#app",
     router,

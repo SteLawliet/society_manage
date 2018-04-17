@@ -3,9 +3,11 @@
         <navbar :uname="getuname" ></navbar>
         <div class="container-fluid">
             <navside></navside>
-            <router-view></router-view>
+            <router-view @update="update"></router-view>
         </div>
-        <login @updateuser="(val)=>uid=val" :islogin="islogin" :uid="uid"></login>
+        <login @updateuser="(val)=>uid=val"
+               :islogin="islogin"
+               :uid="uid"></login>
 
     </div>
 </template>
@@ -71,6 +73,7 @@
 
         },
         methods:{
+            //登录取得user
             login(){
                 this.user =this.$storage.get("user");
                 if (this.user){
@@ -81,16 +84,20 @@
                     };
                 }
             },
+            //更新soclist
             updateSocietyList(){
-                this.$http.get('/societyex/list').then((res)=>{
-                    this.$storage.set("societyList",res.data.data.list);
-                    this.societyList =this.$storage.get("societyList");
-                });
+                let id = this.user.uId || 3 ;
+                this.$storage.update(id<2);
+                // this.$http.get('/societyex/list').then((res)=>{
+                //     this.$storage.set("societyList",res.data.data.list);
+                // });
             },
+            //通过val查询soc.val为数字查询sid.
+            // val为String模糊查询sName
             findSociety(val){
                 if (! isNaN(val)){
                     return this.societyList.filter(((value, index) => {
-                        return value.sId ===id;
+                        return value.sId ===val;
                     })[0])
                 }else {
                     return this.societyList.filter(((value, index) => {

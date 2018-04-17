@@ -25,7 +25,7 @@
             <div id="navbar" class="navbar-collapse collapse"
                  aria-expanded="false" style="height: 1px;">
                 <ul class="nav navbar-nav navbar-right" >
-                    <li><router-link to="/">
+                    <li><router-link to="/society">
                         <span class="glyphicon glyphicon-knight"></span> Join New</router-link></li>
 
                     <li>
@@ -62,14 +62,14 @@
                         </ul>
                     </li>
                 </ul>
-                <form class="navbar-form navbar-right">
+                <div class="navbar-form navbar-right">
                     <input type="text"
                            class="form-control"
                            placeholder="Search..."
                            v-model="val"
                            @keyup.enter="findSocietyByName"
                     >
-                </form>
+                </div>
             </div>
         </div>
     </nav>
@@ -109,7 +109,6 @@ export default {
                 return this.societyList.filter(
                     (value, index) => {
                         return value.sId == val;}
-
                 );
             }else {
                 return this.societyList.filter(

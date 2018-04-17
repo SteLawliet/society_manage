@@ -149,6 +149,13 @@ table tr:nth-child(2n) {
 table tr:nth-child(4n) {
     background: #dff0d8;
 }
+#cardrow .col-md-3.el-card:nth-child(2n) {
+    background: #fcf8e3;
+}
+
+#cardrow .el-card:nth-child(4n) {
+    background: #dff0d8;
+}
 /*nav border*/
 .navbar-fixed-top{
     border-bottom: 4px solid #0055aa;

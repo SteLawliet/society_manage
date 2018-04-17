@@ -117,7 +117,9 @@
                 this.$http.post("/society/info/",this.society).then(
                     (res)=> this.addSuccess=res
                 );
-                setInterval(()=>window.location.assign('index.html#/society'),1000)
+
+                window.location.assign('index.html#/society')
+
             }
 
         }

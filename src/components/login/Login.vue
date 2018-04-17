@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="modal fade clearfix " :class="{'fade':ined}"
+        <div class="modal fade clearfix "
              id="modal-login"
              role="dialog"
              aria-labelledby="myModalLabel"
@@ -77,7 +77,6 @@
             return{
                 islogin:false,
                 uname:"",
-                ined:false,
                 user:{
                     "uAcademy": "",
                     "uBirthday": 0,
@@ -136,20 +135,19 @@
                 }else {
                     this.user = res.data.data;
                     alert(this.user.uName);
-                    if(this.user.uRole<1){
-                        this.$http.get('/societyex/user').then((res)=>{
-                            this.$storage.set("userList",res.data.data.list)
-                        });
-                        alert(" admin login");
-
-                    }
+                    // if(this.user.uRole<1){
+                    //     this.$http.get('/societyex/user').then((res)=>{
+                    //         this.$storage.set("userList",res.data.data.list)
+                    //     });
+                    //     alert(" admin login");
+                    // }
                     this.$http.get('/societyex/user/'+this.user.uId).then((res)=>{
                         this.$storage.set("user",res.data.data[0]);
                     });
+                    setInterval(()=>window.location.assign("index.html"),1000)
+
                     // this.$emit('updateuser',this.user);
-                    // window.location.assign("index.html");
-                    this.ined=true;
-                    this.$router.push("/society")
+                    // this.$router.push("/society")
                 }
             },
 

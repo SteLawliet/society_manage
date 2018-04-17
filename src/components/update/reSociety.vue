@@ -1,19 +1,19 @@
 <template>
     <div class="col-sm-9 col-sm-offset-3 col-md-8 col-md-offset-2">
 
-        <h2 class="sub-header text-center">Apply New Society</h2>
+        <h2 class="sub-header text-center">Update Society</h2>
         <div class="col-md-4"></div>
         <div class="col-md-5">
             <div class="form-group" :class="changeclass">
                 <label for="sName">Society Name</label>
-                <input type="text"
+                <input type="text" disabled
                        v-model.lazy="society.sName"
                        class="form-control "
                        id="sName"
                        @change="nameError"
                        placeholder="Society Name">
-                <span v-if="nameError()" class="help-block">the society name already register</span>
-                <span v-if="!nameError()" class="help-block">      </span>
+                <span v-if="!nameError()" class="help-block">the society name already register</span>
+                <span v-if="nameError()" class="help-block">      </span>
             </div>
 
             <div class="form-group">
@@ -49,7 +49,7 @@
             </div>
             <div class="form-group">
                 <label for="sChairmen">Submit Society Info</label><br>
-                <button  class="btn  btn-primary " :class="btnhide" @click="addSoc"  >Submit</button>
+                <button  class="btn  btn-primary " :class="btnhide" @click="upSoc"  >Update</button>
                 <span class="help-block">A block of help text that breaks onto</span>
 
             </div>
@@ -57,7 +57,7 @@
         <div class="col-md-3">
             <div v-if="addSuccess" class="alert alert-warning alert-dismissible" role="alert">
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <strong>Warning!</strong> Better check yourself, you're not looking too good.
+                <strong>Success!</strong> Better check yourself, you're not looking too good.
             </div>
         </div>
 
@@ -86,15 +86,15 @@
         },
         created() {
 
-
+            this.society=this.$storage.get('society');
         },
         computed: {
 
         },
         watch: {
-
         },
         methods: {
+            //校验输入的sName是否重复、更改class
             nameError(){
                 if (!this.society.sName){
                     return false;
@@ -103,21 +103,26 @@
                 if (res){
                     this.changeclass["has-error"]=true;
                     this.changeclass["has-success"]=false;
-                    this.btnhide.disabled=true;
+                    this.btnhide.disabled=false;
                     return true;
                 }else {
                     this.changeclass["has-error"]=false;
                     this.changeclass["has-success"]=true;
-                    this.btnhide.disabled=false;
+                    this.btnhide.disabled=true;
                     return false;
                 }
 
             },
-            addSoc(){
-                this.$http.post("/society/info/",this.society).then(
-                    (res)=> this.addSuccess=res
-                );
-                setInterval(()=>window.location.assign('index.html#/society'),1000)
+            //更新society info
+            upSoc(){
+                this.$http.put("/society/info/",this.society).then(
+                    (res)=> {if(this.addSuccess=res.data.code===200){
+                        this.$storage.set('society',this.society);
+                        setInterval(()=>window.location.assign('index.html#/society'),1000)
+                    }
+
+                    }
+                ).catch((err)=>logError(err));
             }
 
         }
