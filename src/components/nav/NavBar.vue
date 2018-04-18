@@ -11,7 +11,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <ul class="nav navbar-nav"><li>
+          <ul class="nav navbar-nav"><li @click="update_">
               <a
                   class="" href="#"
                   style="font-size: 17px; color: #327ab7;"
@@ -25,7 +25,7 @@
             <div id="navbar" class="navbar-collapse collapse"
                  aria-expanded="false" style="height: 1px;">
                 <ul class="nav navbar-nav navbar-right" >
-                    <li><router-link to="/society">
+                    <li><router-link to="/addmember">
                         <span class="glyphicon glyphicon-knight"></span> Join New</router-link></li>
 
                     <li>
@@ -115,6 +115,9 @@ export default {
                     (value, index) => {return value.sName.search(val)>-1;}
                 )
             }
+        },
+        update_(){
+            this.$storage.update();
         }
 
     }

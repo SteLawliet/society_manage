@@ -19,7 +19,7 @@
             <div class="form-group" :class="nameclass">
                 <label for="uName">User Name</label>
                 <input type="text"
-                       v-model="user.uName"
+                       v-model.trim="user.uName"
                        class="form-control "
                        id="uName"
                        @blur="nameError"
@@ -68,7 +68,6 @@
                        v-model.lazy="user.uGender"
                        placeholder="Gender">
                 <span class="help-block">female</span>
-                <label >Gender</label>
                 <input type="radio"
                        value="male"
                        name="Gender"
@@ -84,7 +83,7 @@
                        class="form-control"
                        v-model.lazy="user.uAcademy"
                        placeholder="Academy">
-                <span class="help-block">A block of help text that breaks onto</span>
+                <span class="help-block">Enter Your Pone Academy</span>
 
             </div>
             <div class="form-group">
@@ -93,7 +92,7 @@
                        class="form-control"
                        v-model.lazy="user.uBirthday"
                        placeholder="birthday">
-                <span class="help-block">A block of help text that breaks onto</span>
+                <span class="help-block">Enter Your Birthday</span>
 
             </div> <div class="form-group">
             <label >Phone</label>
@@ -101,17 +100,17 @@
                    class="form-control"
                    v-model.lazy="user.uPhone"
                    placeholder="phone">
-            <span class="help-block">A block of help text that breaks onto</span>
+            <span class="help-block">Enter Your Pone Number</span>
 
         </div>
             <div class="form-group">
-            <label class="control-label" for="sDesc">describe this User</label>
+            <label class="control-label" for="sDesc">Describe Some About You</label>
             <textarea id="sDesc" class="form-control" v-model="user.uDesc" rows="3"></textarea>
             </div>
             <div class="form-group">
                 <label >Submit User Info</label><br>
                 <button  class="btn  btn-primary " :class="btnhide" @click="addUser"  >Submit</button>
-                <span class="help-block">A block of help text that breaks onto</span>
+                <span class="help-block">Create a New Account</span>
 
             </div>
         </div>
@@ -163,9 +162,6 @@
 
         },
         methods: {
-            test0(){
-                console.log("enter///////");
-            },
             nameError(){
                 if (!this.user.uName){
                     return false;
@@ -196,9 +192,13 @@
             },
             addUser(){
                 this.$http.post("society/user/",this.user).then(
-                    res=> console.log(res.data.message)
-                    // window.location.assign("index.html")
-
+                    res=> {
+                        this.$message.success("register  "+res.data.message);
+                    setTimeout(
+                        ()=>{
+                            window.location.assign("index.html");
+                        },1000
+                    )}
                 )
             },
             pwdError(){

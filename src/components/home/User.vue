@@ -66,7 +66,7 @@ export default {
         }
     },
     async created(){
-
+        this.$storage.update();
         const res = await this.$http.get("/society/user/");
         this.list = res.data.data.list;
     },

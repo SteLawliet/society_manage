@@ -10,6 +10,7 @@
                        v-model.lazy="society.sName"
                        class="form-control "
                        id="sName"
+                       minlength="7"
                        @change="nameError"
                        placeholder="Society Name">
                 <span v-if="nameError()" class="help-block">the society name already register</span>
@@ -34,7 +35,6 @@
                     <option>科技类 </option>
                     <option>理论类 </option>
                     <option>语言类 </option>
-                    <option>实用技能类</option>
                     <option>体育类 </option>
                     <option>艺术类 </option>
                     <option>文学类</option>
@@ -115,9 +115,15 @@
             },
             addSoc(){
                 this.$http.post("/society/info/",this.society).then(
-                    (res)=> this.addSuccess=res
+                    (res)=> {this.addSuccess=res;
+                      this.$emit('update',"[addSociety.vue  addSoc]");
+
+                    }
                 );
-                setInterval(()=>window.location.assign('index.html#/society'),1000)
+                setTimeout(()=>{
+                    // window.location.assign('index.html#/society')
+                    this.$router.push('/society');
+                },1000)
             }
 
         }

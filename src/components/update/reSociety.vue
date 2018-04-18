@@ -118,8 +118,13 @@
                 this.$http.put("/society/info/",this.society).then(
                     (res)=> {if(this.addSuccess=res.data.code===200){
                         this.$storage.set('society',this.society);
-                        setInterval(()=>window.location.assign('index.html#/society'),1000)
-                    }
+                        setTimeout(
+                            ()=>{
+                                this.$emit("update",'[reSociety] [upSoc]');
+                                this.$router.push("/society");
+                            },1000)
+
+            }
 
                     }
                 ).catch((err)=>logError(err));

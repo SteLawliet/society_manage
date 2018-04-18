@@ -3,11 +3,12 @@
         <navbar :uname="getuname" ></navbar>
         <div class="container-fluid">
             <navside></navside>
-            <router-view @update="update"></router-view>
+            <router-view @update="reSoc" :myProp="myProp" @TestProp="UpdateProp"></router-view>
         </div>
         <login @updateuser="(val)=>uid=val"
                :islogin="islogin"
-               :uid="uid"></login>
+               :uid="uid"
+        ></login>
 
     </div>
 </template>
@@ -15,6 +16,7 @@
     export default {
         data(){
             return{
+                myProp:'',
                 uname:"",
                 uid:{
                     uRole:''
@@ -36,7 +38,7 @@
                     "mDate": 1524499200000,
                     "mDesc": "",
                     "mGrade": "a",
-                    "mNo": 1,
+                    "mNo": 0,
                     "mPosition": "",
                     "mSocietyId": 1,
                     "mUserId": 0
@@ -55,12 +57,13 @@
         },
         created(){
             this.login();
-            this.updateSocietyList();
+            this.$storage.update();
+            window.p = this.myProp;
 
         },
         computed:{
             getuname(){
-                console.log(this.user.uName);
+                console.log('[app.vue] [getuname] _<'+ this.user.uName);
                 return this.user.uName;
             }
 
@@ -77,20 +80,12 @@
             login(){
                 this.user =this.$storage.get("user");
                 if (this.user){
-                    console.log("app.vue login uName："+this.user.uName);
+                    console.log("[app.vue] [login] uName："+this.user.uName);
                 }else {
                     this.user={
                         uName:""
                     };
                 }
-            },
-            //更新soclist
-            updateSocietyList(){
-                let id = this.user.uId || 3 ;
-                this.$storage.update(id<2);
-                // this.$http.get('/societyex/list').then((res)=>{
-                //     this.$storage.set("societyList",res.data.data.list);
-                // });
             },
             //通过val查询soc.val为数字查询sid.
             // val为String模糊查询sName
@@ -104,6 +99,16 @@
                         return value.search(val)>-1;
                     }))
                 }
+            },
+            reSoc(msg){
+                console.log("[app.vue update] [from] --"+msg+"-- []");
+                this.$storage.update();
+
+
+            },UpdateProp(val){
+                console.log("[app.vue UpdateProrp]");
+                this.myProp =val;
+                console.log(val+" -- "+ this.myProp);
             }
         }
 

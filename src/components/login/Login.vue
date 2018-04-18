@@ -134,19 +134,16 @@
                     return false;
                 }else {
                     this.user = res.data.data;
-                    alert(this.user.uName);
-                    // if(this.user.uRole<1){
-                    //     this.$http.get('/societyex/user').then((res)=>{
-                    //         this.$storage.set("userList",res.data.data.list)
-                    //     });
-                    //     alert(" admin login");
-                    // }
+                    // alert(this.user.uName);
                     this.$http.get('/societyex/user/'+this.user.uId).then((res)=>{
                         this.$storage.set("user",res.data.data[0]);
+                        this.user=null;
                     });
-                    setInterval(()=>window.location.assign("index.html"),1000)
+                    setTimeout(
+                        ()=>{
+                            window.location.assign("index.html");
+                        },2000)
 
-                    // this.$emit('updateuser',this.user);
                     // this.$router.push("/society")
                 }
             },

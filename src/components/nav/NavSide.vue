@@ -16,48 +16,48 @@
                                      class="" ><span
                                 class="glyphicon glyphicon-chevron-right"
                                 style="color: #327ab7;
-                               "></span>Member</router-link>
+                               "></span>Member/成员</router-link>
                     </li>
                             <li class="">
                                 <router-link to="/" 
                                 class="" ><span
                                 class="glyphicon glyphicon-chevron-right"
                                 style="color: #327ab7; 
-                                "></span>Review</router-link>
+                                "></span>Review/审核</router-link>
                             </li>
                     <li class="">
                                 <router-link to="/" 
                                 class="" ><span
                                 class="glyphicon glyphicon-chevron-right"
                                 style="color: #327ab7; 
-                                "></span>Infor</router-link>
+                                "></span>Infor/详细</router-link>
                             </li>
                     <li class="nav-divider"></li>
                             <li class="">
                                 <router-link to="/activity" ><span
                                 class="glyphicon glyphicon-chevron-down"
                                 style="color: #327ab7; 
-                                "></span>Activity</router-link>
+                                "></span>Activit/活动</router-link>
                             </li>
                               <li class="">
                                 <router-link to="/" 
                                 class="" ><span
                                 class="glyphicon glyphicon-chevron-right"
                                 style="color: #327ab7;
-                             "></span>Review</router-link>
+                             "></span>Review/活动</router-link>
                             </li>  <li class="">
                                 <router-link to="/"
                                 class="" ><span
                                 class="glyphicon glyphicon-chevron-right"
                                 style="color: #327ab7; 
-                                "></span>Manage</router-link>
+                                "></span>Manage/</router-link>
                             </li>
                     <li class="nav-divider"></li>
                              <li class="">
                                 <router-link to="/user" ><span
                                 class="glyphicon glyphicon-menu-hamburger"
                                 style="color: #327ab7; 
-                                "></span>Personal Infor</router-link>
+                                "></span>Profile/详细</router-link>
                             </li>
                         
                 </ul>

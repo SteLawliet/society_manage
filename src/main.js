@@ -7,7 +7,7 @@ import './statics/css/bootstrap.css'
 import './statics/css/custum.css'
 import Moment from "moment"
 import Home from "./components/home/Home.vue"//导入vue组件
-import App from "./app.vue"
+import App from "./components/home/app.vue"
 import NavBar from "./components/nav/NavBar.vue"
 import NavSide from "./components/nav/NavSide.vue"
 import Login from "./components/login/Login.vue"
@@ -21,6 +21,7 @@ import addActivity from './components/apply/addActivity.vue'
 import Register from  "./components/login/Register.vue"
 import ReSociety from  './components/update/reSociety.vue'
 import ReUser from './components/update/reUser.vue'
+import LoginCom from './components/login/LoginCom.vue'
 import VeeValidate from 'vee-validate';
 // let bootstrap = require("bootstrap");
 // css
@@ -106,6 +107,11 @@ const router = new VueRouter({
             path:"/addactivity",
             component:addActivity
         },
+        {
+            name:"logincom",
+            path:'./logincom',
+            component:LoginCom
+        }
 
 
 

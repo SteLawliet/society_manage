@@ -11,7 +11,11 @@
                 </div>
 
                 <h2 class="sub-header">Section title</h2>
-                <div class="table-responsive">
+           <input class="from-contrl" type="text" v-model="prop_"/>
+           <button class="btn" @click="logTest"> test </button>
+           <button class="btn" @click="logProp"> test0 </button>
+
+           <div class="table-responsive">
                     <table class="table table-striped">
                         <thead>
                             <tr>
@@ -48,12 +52,26 @@ export default {
     data(){
         return{
             msg:"this is home",
+            prop_:''
             
         }
-    },computed:{
-
+    },props:["myProp"],
+    computed:{
+        getUpdate(){
+            this.prop=this.myProp;
+            console.log("[Home.vue]");
+            console.log(this.myProp);
+        }
     },methods:{
-        
+        logTest(){
+            console.log("[Home.vue]"+this.myProp);
+            this.$emit('TestProp',this.prop_);
+            setTimeout(()=>
+                    console.log("[Home.vue]"+this.myProp)
+        ,0)
+        },logProp(){
+            console.log("[Home.vue]"+this.myProp);
+        }
     }
 
 }

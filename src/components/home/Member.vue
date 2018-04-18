@@ -1,26 +1,33 @@
 <template>
     <div>
+
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
             <h2 class="sub-header">Society Member</h2>
-            <div class="table-responsive">
-                <table class="table table-bordered table-hover">
-                    <thead>
-                    <tr>
-                        <th v-for="(v,k,i) in list[0]" :key="i">
-                            {{k}}
-                        </th>
-
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr v-for="(v,k,i) of list" :key="i">
-                        <td v-for="(v0,k0,i0) in v" :key="i" :key0="i0">
-                            {{i0===0?v0.uName:v0}}
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
+            <template v-for="(i) in memList.length">
+                <h2> {{memList[i-1].sName}}</h2>
+                <el-table :data="memList[i-1].members">
+                    <el-table-column prop="sId"              label="sId"       width="100px" v-if="true"></el-table-column>
+                    <el-table-column prop="sName"            label="sName"     width="100px" v-if="true"></el-table-column>
+                    <el-table-column prop="detail.uId"       label="Id"        width="100px" v-if="true"></el-table-column>
+                    <el-table-column prop="detail.uName"     label="Name"      width="100px" v-if="true"></el-table-column>
+                    <el-table-column prop="detail.uGender"   label="Gender"    width="100px" v-if="true"></el-table-column>
+                    <el-table-column prop="detail.uPhone"    label="Phone"     width="100px" v-if="true"></el-table-column>
+                    <el-table-column prop="detail.uDesc"     label="Desc"      width="100px" v-if="true"></el-table-column>
+                    <el-table-column prop="mDate"            label="Date"      width="100px" v-if="true"></el-table-column>
+                    <el-table-column prop="detail.uEmail"    label="Email"     width="100px" v-if="true"></el-table-column>
+                    <el-table-column prop="detail.uAcademy"  label="Academy"   width="100px" v-if="true"></el-table-column>
+                    <el-table-column prop="detail.uBirthday" label="Birthday"  width="100px" v-if="true"></el-table-column>
+                    <el-table-column prop="detail.uClass"    label="Class"     width="100px" v-if="true"></el-table-column>
+                    <el-table-column prop="detail.uPassword" label="Password"  width="100px" v-if="true"></el-table-column>
+                    <el-table-column prop="detail.uRole"     label="Role"      width="100px" v-if="true"></el-table-column>
+     <el-table-column fixed="right"  prop="mStatus"          label="mStatus"   width="100px" v-if="true" :filters="staFilters" sortable :filter-method="filterStatus"></el-table-column>
+                    <el-table-column fixed="right"           label="📝"  icon="el-icon-search"       width="100px">
+                        <template slot-scope="scope">
+                            <el-button @click="updateClick(scope.row)" type="text" size="small">update</el-button>
+                        </template>
+                    </el-table-column>
+                </el-table>
+            </template>
         </div>
     </div>
 </template>
@@ -31,8 +38,6 @@
         data(){
             return{
                 msg:"this is home",
-                list:[],
-                arr:[],
                 user:{
                     "uAcademy": "",
                     "uBirthday": 0,
@@ -61,60 +66,87 @@
                     "sGrade": "",
                     "sId": 0,
                     "sName": "",
+                    "sStatus": 0,
                     "sPic": ""
-                }
-                ,
-                role:3
+                },
+                memList:[],
+                mList:[],
+                soclist:[],
+                socIds:[],
+                ties:{
+                    "sId": 1,
+                    "sName": "sos团",
+                    "mDate": "2018-04-30",
+                    "sStatus": 0,
+                    "uAcademy": "admin",
+                    "uBirthday": "2018-04-02",
+                    "uId": 1,
+                    "uName": "root",
+                    "uPhone": 12233,
+                    "uRole": 0,
+                    "---":''
+                },staFilters:[{text: '未审核', value: '0' }],
             }
         },
-        async created(){
-            this.user =JSON.parse(window.sessionStorage.getItem("user"));
-            console.log(this.user);
-            if(this.user.uRole>1){
-
-            }
-                // ?this.user.uRole:"";
-            console.log("role:"+this.role);
-            let that = this;
-            this.$http.get("/societyex/list/"+this.role)
-                .then(
-                    (res)=>{
-                        if(that.role){
-                            this.list =res.data.data.list[0].members
-                        }else {
-                            this.list =res.data.data[0].members
+        created(){
+            this.$storage.update();
+            let self = this;
+            this.user =this.$storage.get("user");
+            this.list = this.$storage.get("societyList");
+            if (this.user ==null||this.user.societyExes==null||this.user.societyExes.length<1){
+                this.$message.warning("please login or join a society");
+            }else {
+                if(this.user.uRole>1){
+                    this.user.societyExes.forEach(
+                        (val0)=>{
+                            self.memList.push(self.list.filter(
+                                (val,i)=>{
+                                    // console.log(val.sId===val0.sId);
+                                    return val.sId===val0.sId;
+                                }
+                            )[0])
                         }
+                    );
 
-                    }
-                );
+                }else {
+                    self.memList =self.list;
+                }
+            }
+             console.log('[Member.vue] [created] memList :');
+             console.log(this.memList);
+
         },
         mounted(){
+            this.memList.forEach(
+                (v,i)=>{
+                    v.members.forEach(
+                        (v0,i0)=>{
+                            v0.sName =v.sName;
+                            v0.sId=v.sId;
+                        }
+                    );
+                }
 
+        );
+            console.log(this.memList);
 
         },
         computed:{
             convertlist(){
-
-
-            },
-            loadlist(){
-                var res = "";
-                this.list.forEach( async (val) => {
-                    res  = await this.$http.get("/society/info/"+val.mSocietyId);
-                    val.societyName = res.data.data.sName;
-                });
-
 
             }
         },methods:{
             convert(date){
                 return Moment(date).format('YYYY-MM-DD');
             },
-            getList0(){
-                console.log(this.list);
-                return this.list;
+            updateClick(row){
+                this.$message.info(JSON.stringify(row));
+            },
+            filterStatus(value, row, column) {
+                const property = column['property'];
+                return row[property] < 0;
             }
-        }
+    }
     }
 </script>
 
